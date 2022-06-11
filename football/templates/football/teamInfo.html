@@ -1,0 +1,61 @@
+{% extends "football/layout.html" %}
+{% block body %}
+
+<div class="Info">
+    <div class="InfoCrest">
+        <img src="{{ team.crestUrl }}" width="200" height="200">
+    </div>
+
+    <div class="TeamInfo">
+        <h2 id="team-name" team-id="{{ tla }}">{{ team.name }}</h2>
+        <p>Home ground: {{ team.venue }}</p>
+        <p>Founded: {{ team.founded }}</p>
+        <p>Website: <a href="{{ team.website }}">{{ team.website }}</a></p>
+    </div>
+</div>
+
+<div class="previous">
+    <h4>Previous match</h4>
+    <table>
+        <tr class="table">
+            <td class="MDteams">{{ previous.homeTeam.name }}</td>
+            <td class="score"> {{ previous.score.fullTime.homeTeam }} - {{ previous.score.fullTime.awayTeam }}</td>
+            <td class="MDteams">{{ previous.awayTeam.name }}</td>
+        </tr>
+    </table>
+</div>
+
+<br>
+
+<h4>Standing</h4>
+<table style="border-collapse: collapse;
+width: 100%;
+background-color: aliceblue;">
+    <tr>
+        <th>Position</th>
+        <th>Team</th>
+        <th>Played</th>
+        <th>Won</th>
+        <th>Drawn</th>
+        <th>Lost</th>
+        <th>GF</th>
+        <th>GA</th>
+        <th>GD</th>
+        <th>Points</th>
+    </tr>
+    <tr>
+        <td>{{ pos.position }}</td>
+        <td><img src="{{ pos.team.crestUrl }}" width="20" height="20"> {{ pos.team.name }}</td>
+        <td>{{ pos.playedGames }}</td>
+        <td>{{ pos.won }}</td>
+        <td>{{ pos.draw }}</td>
+        <td>{{ pos.lost }}</td>
+        <td>{{ pos.goalsFor }}</td>
+        <td>{{ pos.goalsAgainst }}</td>
+        <td>{{ pos.goalDifference }}</td>
+        <td><b>{{ pos.points }}</b></td>
+    </tr>
+  </table>
+
+
+{% endblock %}

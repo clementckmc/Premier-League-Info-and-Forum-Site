@@ -1,0 +1,37 @@
+{% extends "football/layout.html" %}
+
+{% block body %}
+
+<h2>Table</h2>
+<div class="standing">
+<table>
+    <tr>
+        <th>Position</th>
+        <th>Team</th>
+        <th>Played</th>
+        <th>Won</th>
+        <th>Drawn</th>
+        <th>Lost</th>
+        <th>GF</th>
+        <th>GA</th>
+        <th>GD</th>
+        <th>Points</th>
+    </tr>
+    {% for pos in table %}
+    <tr>
+        <td>{{ pos.position }}</td>
+        <td><img src="{{ pos.team.crestUrl }}" width="20" height="20"> {{ pos.team.name }}</td>
+        <td>{{ pos.playedGames }}</td>
+        <td>{{ pos.won }}</td>
+        <td>{{ pos.draw }}</td>
+        <td>{{ pos.lost }}</td>
+        <td>{{ pos.goalsFor }}</td>
+        <td>{{ pos.goalsAgainst }}</td>
+        <td>{{ pos.goalDifference }}</td>
+        <td><b>{{ pos.points }}</b></td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends "football/layout.html" %}
+
+{% block body %}
+
+<a href="{% url 'forum' %}" class="h3">Forum</a> > 
+{% if selected_team != None %}
+<a href="{% url 'teamForum' selected_team.tla %}" class="team-link h4"><img src="{{ selected_team.crestUrl }}" width="35" height="35"> {{ selected_team.shortName }} Forum</a>
+{% else %}
+<a href="{% url 'teamForum' 'GEN' %}" class="h3">General discussion</a>
+{% endif %}
+<br>
+<br>
+
+<!-- the thread (op) -->
+<div class="card">
+    <div class="card-header">
+        {{ thread.op }}
+    </div>
+    <div class="card-body">
+        <h5>{{ thread.topic }}</h5>
+        <p class="card-text" id="tcontent{{ thread.id }}">{{ thread.content | linebreaksbr }}</p>
+        <a href="javascript:quote(element);" quote-id="{{ thread.id }}" tr="t" class="quotebtn" poster="{{ thread.op }}"><i class="bi bi-chat-left-quote"></i></a>
+    </div>
+    <div class="card-footer text-muted">
+        <div class="card-text">
+            {% if thread.id in upvote_t %}
+            <div vote="up" id="t{{ thread.id }}" class="vote">
+            {% elif thread.id in downvote_t %}
+            <div vote="down" id="t{{ thread.id }}" class="vote">
+            {% else %}
+            <div vote="None" id="t{{ thread.id }}" class="vote">
+            {% endif %}
+                {% if thread.id not in upvote_t and thread.id not in downvote_t %}
+                <button class="transparent votebtn" id="t{{ thread.id }}up" ud="u" vote-id="{{ thread.id }}" tr="t">
+                {% else %} <!-- disable button if voted -->
+                <button class="transparent votebtn" id="t{{ thread.id }}up" ud="u" vote-id="{{ thread.id }}" tr="t" disabled>
+                {% endif %}
+                <i class="bi bi-caret-up-square" id="it{{ thread.id }}up">{{ thread.get_upvote }}</i>
+                </button>
+                {% if thread.id not in upvote_t and thread.id not in downvote_t %}
+                <button class="transparent votebtn" id="t{{ thread.id }}down" ud="d" vote-id="{{ thread.id }}" tr="t">
+                {% else %}
+                <button class="transparent votebtn" id="t{{ thread.id }}down" ud="d" vote-id="{{ thread.id }}" tr="t" disabled>
+                {% endif %}
+                <i class="bi bi-caret-down-square" id="it{{ thread.id }}down">{{ thread.get_downvote }}</i>
+                </button>
+            </div>
+            <span class="number-of" style="float: right;">{{ thread.time }}</span>
+        </div>
+    </div>
+
+</div>
+
+<br>
+
+<!-- the replies -->
+{% for reply in replies %}
+<div class="card">
+    <div class="card-header">
+        {{ reply.poster }}
+    </div>
+    <div class="card-body">
+        <p class="card-text" id="rcontent{{ reply.id }}">{{ reply.content | linebreaksbr }}</p>
+        <a href="javascript:quote(element);" quote-id="{{ reply.id }}" tr="r" class="quotebtn" poster="{{ reply.poster }}"><i class="bi bi-chat-left-quote"></i></a>
+    </div>
+    <div class="card-footer text-muted">
+        <div class="card-text">
+            {% if reply.id in upvote_r %}
+            <div vote="up" id="r{{ reply.id }}" class="vote">
+            {% elif reply.id in downvote_r %}
+            <div vote="down" id="r{{ reply.id }}" class="vote">
+            {% else %}
+            <div vote="None" id="r{{ reply.id }}" class="vote">
+            {% endif %}
+                {% if reply.id not in upvote_r and reply.id not in downvote_r %}
+                <button class="transparent votebtn" id="r{{ reply.id }}up" ud="u" vote-id="{{ reply.id }}" tr="r">
+                {% else %}
+                <button class="transparent votebtn" id="r{{ reply.id }}up" ud="u" vote-id="{{ reply.id }}" tr="r" disabled>
+                {% endif %}
+                <i class="bi bi-caret-up-square" id="ir{{ reply.id }}up">{{ reply.get_upvote }}</i>
+                </button>
+                {% if reply.id not in upvote_r and reply.id not in downvote_r %}
+                <button class="transparent votebtn" id="r{{ reply.id }}down" ud="d" vote-id="{{ reply.id }}" tr="r">
+                {% else %}
+                <button class="transparent votebtn" id="r{{ reply.id }}down" ud="d" vote-id="{{ reply.id }}" tr="r" disabled>
+                {% endif %}
+                <i class="bi bi-caret-down-square" id="ir{{ reply.id }}down">{{ reply.get_downvote }}</i>
+                </button>
+            </div>
+            <span class="number-of" style="float: right;">{{ reply.time }}</span>
+        </div>
+    </div>
+
+</div>
+<br>
+{% endfor %}
+
+<!-- Pagination -->
+<nav aria-label="Page navigation example">
+    <ul class="pagination pagination-lg justify-content-center">
+    {% if replies.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ replies.previous_page_number }}">Previous</a></li>
+    {% else %}
+      <li class="page-item disabled"><a class="page-link" href="#" aria-disabled="true">Previous</a></li>
+    {% endif %}
+    {% for page in replies.paginator.page_range %}
+        <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+    {% endfor %}
+    {% if replies.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ replies.next_page_number }}">Next</a></li>
+    {% else %}
+      <li class="page-item disabled"><a class="page-link" href="#" aria-disabled="true">Next</a></li>
+    {% endif %}
+    </ul>
+  </nav>
+
+<!-- New Reply -->
+<h4>New Reply</h4>
+<form action="{% url 'thread' slug %}" method="POST">
+    {% csrf_token %}
+    <div class="col">
+        {{ form.content | safe }}
+    </div>
+    <input class="btn btn-primary" type="submit" value="Reply">
+</form>
+
+{% endblock %}

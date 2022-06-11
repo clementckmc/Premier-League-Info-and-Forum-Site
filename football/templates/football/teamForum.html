@@ -1,0 +1,27 @@
+{% extends "football/layout.html" %}
+
+{% block body %}
+
+<a href="{% url 'forum' %}"><h2>Forum</h2></a>
+<br>
+{% if selected_team != None %}
+<h4><img src="{{ selected_team.crestUrl }}" width="35" height="35"> {{ selected_team.shortName }} Forum</h4>
+<a class="btn btn-outline-info" href="{% url 'newPost' selected_team.tla %}" role="button">New Thread</a>
+{% else %}
+<h4>General discussion</h4>
+<a class="btn btn-outline-info" href="{% url 'newPost' 'GEN' %}" role="button">New Thread</a>
+{% endif %}
+<br>
+<br>
+
+<table class="table table-light table-hover">
+    {% for thread in threads %}
+    <tr>
+        <td><a href="{{ thread.get_url }}">{{ thread.topic }}</a></td>
+        <td><span class="number-of">Replies:</span> {{ thread.get_reply_count }}</td>
+        <td>{{ thread.op }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

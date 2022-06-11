@@ -1,0 +1,30 @@
+{% extends "football/layout.html" %}
+
+{% block body %}
+<form method="POST">
+    {% csrf_token %}
+    <select class="form-select form-select-lg mb-3" aria-label="Matchday" name="selected_matchday" onchange="this.form.submit()">
+        <option selected>Select Matchday</option>
+        {% for i in numberMD %}
+            {% if i == current_int %}
+            <option value="{{ i }}">Matchday {{ i }} (Current)</option>
+            {% else %}
+            <option value="{{ i }}">Matchday {{ i }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+</form>
+
+<div>
+    <h3>Matchday {{ MD }}</h3>
+    <table class="table table-striped table-hover matchday">
+    {% for fixture in fixtures %}
+    <tr class="matchdayRow" id="{{ fixture.matchID }}">
+        <td class="MDteams"><img src="{{ fixture.homeCrest }}" width="25" height="25"> {{ fixture.home }}</td>
+        <td class="{{ fixture.status }} score">{{ fixture.score }}</td>
+        <td class="MDteams"><img src="{{ fixture.awayCrest }}" width="25" height="25"> {{ fixture.away }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

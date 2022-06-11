@@ -1,0 +1,25 @@
+{% extends "football/layout.html" %}
+
+{% block body %}
+
+<a href="{% url 'forum' %}"><h2>Forum</h2></a>
+<br>
+{% if selected_team != None %}
+<a href="{% url 'teamForum' tla %}" class="team-link"><h4><img src="{{ selected_team.crestUrl }}" width="35" height="35"> {{ selected_team.shortName }} Forum</h4></a>
+{% else %}
+<a href="{% url 'teamForum' tla %}"><h4>General discussion</h4></a>
+{% endif %}
+
+<h2>New Post</h2>
+<form action="{% url 'newPost' tla %}" method="POST">
+    {% csrf_token %}
+    <div class="col-md-6">
+        Topic: {{ form.topic }}
+    </div>
+    <div class="col m-2">
+        {{ form.content | safe }}
+    </div>
+    <input class="btn btn-primary" type="submit" value="Create Thread">
+</form>
+
+{% endblock %}

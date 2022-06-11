@@ -1,0 +1,20 @@
+{% extends "football/layout.html" %}
+
+{% block body %}
+
+<h2>Forum</h2>
+
+<table class="table table-light table-hover">
+    <tr>
+        <td><a href="{% url 'teamForum' 'general' %}">General discussion</a></td>
+        <td><span class="number-of">Number of threads:</span> {{ gen_count }}</td>
+    </tr>
+    {% for team in teams %}
+    <tr>
+        <td><a class="team-link" href="{% url 'teamForum' team.tla %}"><img src="{{ team.crestUrl }}" width="20" height="20"> {{ team.shortName }} Forum</a></td>
+        <td><span class="number-of">Number of threads:</span> {{ team.count }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
