@@ -69,4 +69,3 @@ python manage.py runserver
 Then Navigate to http://127.0.0.1:8000/ in your browser.
 
 A token is needed to retrieve data from [football-API](https://www.football-data.org/).
-It has already been included in `views.py` but feel free to get your own token by registering on [football-API](https://www.football-data.org/).
