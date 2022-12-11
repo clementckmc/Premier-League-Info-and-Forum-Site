@@ -12,15 +12,18 @@ from django.core.paginator import Paginator
 from .models import User, Thread, Reply, ThreadForm, ReplyForm
 from django.db.models import Max
 
+import os
 import requests
 import json
 import html2text
+from dotenv import load_dotenv
+load_dotenv()  # loads the configs from .env
 
 url_teams = "http://api.football-data.org/v2/competitions/2021/teams"
 url_standings = "http://api.football-data.org/v2/competitions/2021/standings"
 
 headers = {
-    'X-Auth-Token': 'f9562bf576bd4f0d8cbefd9417242c24'
+    'X-Auth-Token': str(os.getenv('FOOTBALL_KEY'))
 }
 
 response_teams = requests.request("GET", url_teams, headers=headers)
@@ -159,7 +162,7 @@ def vote_post(request):
                 vote_count = Thread.upvote.through.objects.filter(thread_id=json_data['vote_id']).count()
             else:
                 add_downvote = Thread.downvote.through.objects.create(thread_id=json_data['vote_id'], user_id=request.user.id)
-                add_downvote.save()  
+                add_downvote.save()
                 vote_count = Thread.downvote.through.objects.filter(thread_id=json_data['vote_id']).count()
         else: # for replies
             if vote == "u":
@@ -168,7 +171,7 @@ def vote_post(request):
                 vote_count = Reply.upvote.through.objects.filter(reply_id=json_data['vote_id']).count()
             else:
                 add_downvote = Reply.downvote.through.objects.create(reply_id=json_data['vote_id'], user_id=request.user.id)
-                add_downvote.save()  
+                add_downvote.save()
                 vote_count = Reply.downvote.through.objects.filter(reply_id=json_data['vote_id']).count()
 
         return JsonResponse({"vote": vote, "vote_count": vote_count, "status": 201})
@@ -295,7 +298,7 @@ def newPost(request, tla="general"):
 
     if request.method == "POST":
         form = ThreadForm(request.POST)
-        
+
         if form.is_valid():
             newthread = form.save(commit=False)
             newthread.content = newthread.content.replace('\n', '<br>')
