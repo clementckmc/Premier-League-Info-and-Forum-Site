@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn gettingstarted.wsgi
+web: gunicorn premier-league-info-forum.wsgi
