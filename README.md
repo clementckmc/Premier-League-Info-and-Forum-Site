@@ -1,4 +1,4 @@
-## Premier League Info and Forum Site
+# Premier League Info and Forum Site
 ### Capstone - CS50’s Web Programming with Python and JavaScript
 
 ### Overview
