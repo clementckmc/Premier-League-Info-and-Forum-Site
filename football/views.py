@@ -19,8 +19,8 @@ import html2text
 from dotenv import load_dotenv
 load_dotenv()  # loads the configs from .env
 
-url_teams = "http://api.football-data.org/v2/competitions/2021/teams"
-url_standings = "http://api.football-data.org/v2/competitions/2021/standings"
+url_teams = "http://api.football-data.org/v4/competitions/PL/teams"
+url_standings = "http://api.football-data.org/v4/competitions/PL/standings"
 
 headers = {
     'X-Auth-Token': str(os.getenv('FOOTBALL_KEY'))
@@ -35,7 +35,7 @@ for team in response_teams.json()["teams"]:
     PLteams[team["id"]] = {
     "name": team["name"],
     "shortName": team["shortName"],
-    "crestUrl": team["crestUrl"],
+    "crestUrl": team["crest"],
     "tla": team["tla"]
     }
 
