@@ -5,7 +5,7 @@
 <a href="{% url 'forum' %}"><h2>Forum</h2></a>
 <br>
 {% if selected_team != None %}
-<a href="{% url 'teamForum' tla %}" class="team-link"><h4><img src="{{ selected_team.crestUrl }}" width="35" height="35"> {{ selected_team.shortName }} Forum</h4></a>
+<a href="{% url 'teamForum' tla %}" class="team-link"><h4><img src="{{ selected_team.crest }}" width="35" height="35"> {{ selected_team.shortName }} Forum</h4></a>
 {% else %}
 <a href="{% url 'teamForum' tla %}"><h4>General discussion</h4></a>
 {% endif %}

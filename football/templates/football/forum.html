@@ -11,7 +11,7 @@
     </tr>
     {% for team in teams %}
     <tr>
-        <td><a class="team-link" href="{% url 'teamForum' team.tla %}"><img src="{{ team.crestUrl }}" width="20" height="20"> {{ team.shortName }} Forum</a></td>
+        <td><a class="team-link" href="{% url 'teamForum' team.tla %}"><img src="{{ team.crest }}" width="20" height="20"> {{ team.shortName }} Forum</a></td>
         <td><span class="number-of">Number of threads:</span> {{ team.count }}</td>
     </tr>
     {% endfor %}

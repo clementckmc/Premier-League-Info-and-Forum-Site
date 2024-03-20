@@ -2,9 +2,9 @@
 
 {% block body %}
 
-<a href="{% url 'forum' %}" class="h3">Forum</a> > 
+<a href="{% url 'forum' %}" class="h3">Forum</a> >
 {% if selected_team != None %}
-<a href="{% url 'teamForum' selected_team.tla %}" class="team-link h4"><img src="{{ selected_team.crestUrl }}" width="35" height="35"> {{ selected_team.shortName }} Forum</a>
+<a href="{% url 'teamForum' selected_team.tla %}" class="team-link h4"><img src="{{ selected_team.crest }}" width="35" height="35"> {{ selected_team.shortName }} Forum</a>
 {% else %}
 <a href="{% url 'teamForum' 'GEN' %}" class="h3">General discussion</a>
 {% endif %}
