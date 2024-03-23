@@ -13,5 +13,8 @@ urlpatterns = [
     path("forum/<str:tla>", views.teamForum, name="teamForum"),
     path("forum/<str:tla>/new_thread", views.newPost, name="newPost"),
     path("thread/<slug:slug>", views.thread, name="thread"),
-    path("vote_post/", views.vote_post, name="vote_post")
+    path("vote_post/", views.vote_post, name="vote_post"),
 ]
+
+handler404 = 'football.views.handler404'
+handler500 = 'football.views.handler500'
