@@ -4,6 +4,10 @@
 
 <h2>Hi <strong>{{ user.username }}</strong>! Welcome to the Premier League Info and Forum Site.</h2>
 <br>
-<h4>The current matchday is Matchday {{ current_matchday }} with {{ first }} staying up top.</h4>
+{% if current_matchday == '38' %}
+  <h4>It is the end of the season. {{ first }} is the Premier League Champion.</h4>
+{% else %}
+  <h4>The current matchday is Matchday {{ current_matchday }} with {{ first }} staying up top.</h4>
+{% endif %}
 
 {% endblock %}
