@@ -29,7 +29,7 @@ headers = {
 response_teams = requests.request("GET", url_teams, headers=headers)
 response_standings = requests.request("GET", url_standings, headers=headers)
 current_matchday = response_standings.json()["season"]["currentMatchday"]
-current_season_tmp = response_standings.json()["filters"]["season"]
+current_season_tmp = response_standings.json()["filters"]["season"] # Response from API only includes the starting year of the season
 current_season = current_season_tmp + "-" + str(int(current_season_tmp) + 1)
 
 PLteams = {}
