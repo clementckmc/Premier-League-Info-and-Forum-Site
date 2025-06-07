@@ -29,6 +29,8 @@ headers = {
 response_teams = requests.request("GET", url_teams, headers=headers)
 response_standings = requests.request("GET", url_standings, headers=headers)
 current_matchday = response_standings.json()["season"]["currentMatchday"]
+current_season_tmp = response_standings.json()["filters"]["season"]
+current_season = current_season_tmp + "-" + str(int(current_season_tmp) + 1)
 
 PLteams = {}
 for team in response_teams.json()["teams"]:
@@ -46,7 +48,8 @@ def index(request):
     return render(request, "football/index.html", {
         "teams": response_teams.json()["teams"],
         "current_matchday": str(current_matchday),
-        "first": first
+        "first": first,
+        "current_season": current_season
     })
 
 def login_view(request):
